@@ -91,10 +91,6 @@ class AgenteVinicius extends Controller
             "datahoraagendamentovisita" => $data
         ];
 
-        return response()->json([
-            'message' => $fields,
-        ], 200);
-
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'chave' => 'qHxCrog1H8RxykMxedbNzEXxKaUvVzEl9ugAu3inZVQ=',
