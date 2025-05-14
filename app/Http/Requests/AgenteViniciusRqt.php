@@ -25,7 +25,7 @@ class AgenteViniciusRqt extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'Nome',
+            'nome' => 'Nome',
             'telefone' => 'Telefone',
             'email' => 'E-mail',
             'empreendimento' => 'Empreendimento',
