@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests\AgenteViniciusRqt;
+use App\Http\Requests\AgenteViniciusHorariosRqt;
+use App\Http\Requests\AgenteViniciusVisitasRqt;
 use Illuminate\Support\Facades\Http;
 
 class AgenteVinicius extends Controller
