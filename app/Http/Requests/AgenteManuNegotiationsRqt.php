@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AgenteManuRqt extends FormRequest
+class AgenteManuNegotiationsRqt extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,6 @@ class AgenteManuRqt extends FormRequest
             'name' => 'Nome',
             'telefone' => 'Telefone',
             'email' => 'E-mail',
-            'empreendimento' => 'Empreendimento',
         ];
     }
 
@@ -42,7 +41,6 @@ class AgenteManuRqt extends FormRequest
             'nome' => 'required|string|min:3',
             'telefone' => 'required|min:3',
             'email' => 'required|email',
-            'empreendimento' => 'min:3',
         ];
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\AgenteViniciusHorariosRqt;
@@ -11,6 +10,9 @@ use Illuminate\Support\Facades\Http;
 
 class AgenteVinicius extends Controller
 {   
+
+    protected $chave = "qHxCrog1H8RxykMxedbNzEXxKaUvVzEl9ugAu3inZVQ=";
+    protected $codigoAcesso = 16;
 
     /**
      * Empreendimentos cadastrados no CRM
@@ -27,7 +29,7 @@ class AgenteVinicius extends Controller
     /**
      * Lista os horários disponíveis para visita
      */
-    public function horarios(AgenteViniciusHorariosRqt $request)
+    public function hours ( AgenteViniciusHorariosRqt $request )
     {   
         Log::build([ 
             'driver' => 'single',
@@ -57,8 +59,8 @@ class AgenteVinicius extends Controller
         
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-            'chave' => 'qHxCrog1H8RxykMxedbNzEXxKaUvVzEl9ugAu3inZVQ=',
-            'codigoacesso' => 16
+            'chave' => $this->chave,
+            'codigoacesso' => $this->codigoAcesso
         ])->post('https://api.imoview.com.br/Imovel/RetornarHorariosVisitasDisponiveis', json_encode($fields));
         
         return response()->json([
@@ -69,7 +71,7 @@ class AgenteVinicius extends Controller
     /**
      * Marca uma visita dentro do CRM do cliente, com base na data e horário enviado
      */
-    public function visitas(AgenteViniciusVisitasRqt $request)
+    public function visits ( AgenteViniciusVisitasRqt $request )
     {
         Log::build([ 
             'driver' => 'single',
@@ -101,8 +103,8 @@ class AgenteVinicius extends Controller
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-            'chave' => 'qHxCrog1H8RxykMxedbNzEXxKaUvVzEl9ugAu3inZVQ=',
-            'codigoacesso' => 16
+            'chave' => $this->chave,
+            'codigoacesso' => $this->codigoAcesso
         ])->post('https://api.imoview.com.br/Lead/IncluirLead', json_encode($fields));
 
         return response()->json([
