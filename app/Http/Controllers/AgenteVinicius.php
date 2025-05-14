@@ -42,8 +42,14 @@ class AgenteVinicius extends Controller
             return strpos($item, $empreendimento) !== false;
         });
 
+        if( $codempreendimento == false ){
+            return response()->json([
+                'message' => "Empreendimento não encontrado, tente escolher um outro."
+            ], 200);
+        }
+
         $fields = [
-            "codigoimovel" => $codempreendimento !== false ? key($codempreendimento) : "",
+            "codigoimovel" => key($codempreendimento),
             "data" => $data,
             "codigounidade" => 30,
         ];
