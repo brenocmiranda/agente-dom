@@ -47,10 +47,6 @@ class AgenteVinicius extends Controller
             "codigounidade" => 30,
         ];
         
-        return response()->json([
-            'message' => $request->all()
-        ], 200);
-
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'chave' => 'qHxCrog1H8RxykMxedbNzEXxKaUvVzEl9ugAu3inZVQ=',
