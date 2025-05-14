@@ -44,7 +44,7 @@ class AgenteVinicius extends Controller
 
         if( $codempreendimento == false ){
             return response()->json([
-                'message' => "Empreendimento não encontrado, tente escolher um outro."
+                'message' => "Empreendimento não encontrado, tente selecionar um outro."
             ], 200);
         }
 
