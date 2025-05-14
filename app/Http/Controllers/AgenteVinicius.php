@@ -49,7 +49,7 @@ class AgenteVinicius extends Controller
         ];
 
         return response()->json([
-            'message' => $codempreendimento
+            'message' => json_encode($fields)
         ], 200);
         
         $response = Http::withHeaders([
