@@ -61,7 +61,7 @@ class AgenteVinicius extends Controller
     /**
      * Marca uma visita dentro do CRM do cliente, com base na data e horário enviado
      */
-    public function visita(AgenteViniciusRqt $request)
+    public function visitas(AgenteViniciusRqt $request)
     {
         Log::build([ 
             'driver' => 'single',
