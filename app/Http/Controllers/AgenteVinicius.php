@@ -24,20 +24,44 @@ class AgenteVinicius extends Controller
     ];
 
     /**
-     * Display a listing of the resource.
+     * Lista os horários disponíveis para visita
      */
-    public function index()
-    {
+    public function horarios(Request $request)
+    {   
+        Log::build([ 
+            'driver' => 'single',
+            'path' => storage_path('logs/api/agentevinicius/' . date("d-m-Y") . '.log'),
+        ])->info('Dados do lead recebido: ' . json_encode($request->all()) );
+        
+        $data = $request->data;
+        $empreendimento = $request->empreendimento; 
+        
+        // Capturando código do empreendimento de acordo com array
+        $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
+            return strpos($item, $empreendimento) !== false;
+        });
+
+        $fields = [
+            "codigoimovel" => $codempreendimento !== false ? key($codempreendimento) : "",
+            "data" => $data,
+            "codigounidade" => 30,
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'chave' => 'qHxCrog1H8RxykMxedbNzEXxKaUvVzEl9ugAu3inZVQ=',
+            'codigoacesso' => 16
+        ])->post('https://api.imoview.com.br/Imovel/RetornarHorariosVisitasDisponiveis', json_encode($fields));
+        
         return response()->json([
-            'status' => true,
-            'message' => $this->arrayEmpreendimentos,
-        ]);
+            'message' => !empty($response->json()) ? $response->json() : "Não existe horários disponíveis para agendamento."
+        ], 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Marca uma visita dentro do CRM do cliente, com base na data e horário enviado
      */
-    public function store(AgenteViniciusRqt $request)
+    public function visita(AgenteViniciusRqt $request)
     {
         Log::build([ 
             'driver' => 'single',
@@ -47,6 +71,7 @@ class AgenteVinicius extends Controller
         $nome = $request->nome;
         $email = $request->email;
         $telefone = $request->telefone;
+        $data = $request->data;
         $empreendimento = $request->empreendimento; 
 
         // Capturando código do empreendimento de acordo com array
@@ -58,66 +83,21 @@ class AgenteVinicius extends Controller
             "nome" => $nome,
             "email" => $email,
             "telefone" => $telefone,
-            "midia" => "Agente Vinícius",
+            "midia" => "Agente Vinícius - WhatsApp",
             "codigounidade" => 30,
-            "codigoimovel" => $codempreendimento !== false ? reset($codempreendimento) : "",
-            "utm" => "",
-            "anotacoes" => "Atendente: Agente Vinicius | Empreendimento de interesse:" . $empreendimento
+            "codigoimovel" => $codempreendimento !== false ? key($codempreendimento) : "",
+            "anotacoes" => "Empreendimento de interesse capturado através de conversa: " . $empreendimento,
+            "datahoraagendamentovisita" => $data
         ];
-        
-        $return = $this->sendImoview( $fields );
 
-        return response()->json([
-            'status' => true,
-            'message' => $return,
-            'request' => $request->all()
-        ], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        return response()->json([
-            'status' => true,
-            'message' => 'Function no config.',
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        return response()->json([
-            'status' => true,
-            'message' => 'Function no config.',
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        return response()->json([
-            'status' => true,
-            'message' => 'Function no config.',
-        ]);
-    }
-
-    /**
-     * Enviando para o CRM - Anuar Donato (Imoview)
-     */
-    public function sendImoview($data)
-    {
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'chave' => 'qHxCrog1H8RxykMxedbNzEXxKaUvVzEl9ugAu3inZVQ=',
             'codigoacesso' => 16
-        ])->post('https://api.imoview.com.br/Lead/IncluirLead', json_encode($data));
+        ])->post('https://api.imoview.com.br/Lead/IncluirLead', json_encode($fields));
 
-        return $response->json();
+        return response()->json([
+            'message' => $response->successful() === true ? "Agendamento realizado com sucesso." : "Não foi possível realizar o agendamento.",
+        ], 200);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class AgenteViniciusRqt extends FormRequest
 {
@@ -28,6 +29,7 @@ class AgenteViniciusRqt extends FormRequest
             'telefone' => 'Telefone',
             'email' => 'E-mail',
             'empreendimento' => 'Empreendimento',
+            'data' => 'Data'
         ];
     }
 
@@ -43,6 +45,7 @@ class AgenteViniciusRqt extends FormRequest
             'telefone' => 'required|min:3',
             'email' => 'required|email',
             'empreendimento' => 'min:3',
+            'data' => 'required', Rule::date()->format('Y-m-d hh:mm')
         ];
     }
 
