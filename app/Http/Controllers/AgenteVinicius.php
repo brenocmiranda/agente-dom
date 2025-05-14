@@ -33,7 +33,7 @@ class AgenteVinicius extends Controller
             'path' => storage_path('logs/api/agentevinicius/' . date("d-m-Y") . '.log'),
         ])->info('Dados do lead recebido: ' . json_encode($request->all()) );
         
-        $data = $request->data;
+        $data = date('dd/mm/yyyy', strtotime($request->data));
         $empreendimento = $request->empreendimento; 
         
         // Capturando código do empreendimento de acordo com array
