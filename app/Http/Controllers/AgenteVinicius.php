@@ -42,6 +42,7 @@ class AgenteVinicius extends Controller
             return strpos($item, $empreendimento) !== false;
         });
 
+        // Validando se empreendimento existe
         if( $codempreendimento == false ){
             return response()->json([
                 'message' => "Empreendimento não encontrado, tente selecionar um outro."
