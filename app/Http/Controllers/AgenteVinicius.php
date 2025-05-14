@@ -46,6 +46,10 @@ class AgenteVinicius extends Controller
             "data" => $data,
             "codigounidade" => 30,
         ];
+        
+        return response()->json([
+            'message' => $fields
+        ], 200);
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
@@ -71,7 +75,7 @@ class AgenteVinicius extends Controller
         $nome = $request->nome;
         $email = $request->email;
         $telefone = $request->telefone;
-        $data = $request->data;
+        $data = date('d/m/Y H:i', strtotime($request->data));
         $empreendimento = $request->empreendimento; 
 
         // Capturando código do empreendimento de acordo com array
