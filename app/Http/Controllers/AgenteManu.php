@@ -113,8 +113,6 @@ class AgenteManu extends Controller
                 ]
             ];
             $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);
-
-            return $response->json();
         }
         
         return response()->json([
