@@ -26,7 +26,7 @@ class AgenteVinicius extends Controller
     /**
      * Lista os horários disponíveis para visita
      */
-    public function horarios(Request $request)
+    public function horarios(AgenteViniciusHorariosRqt $request)
     {   
         Log::build([ 
             'driver' => 'single',
@@ -61,7 +61,7 @@ class AgenteVinicius extends Controller
     /**
      * Marca uma visita dentro do CRM do cliente, com base na data e horário enviado
      */
-    public function visitas(AgenteViniciusRqt $request)
+    public function visitas(AgenteViniciusVisitasRqt $request)
     {
         Log::build([ 
             'driver' => 'single',

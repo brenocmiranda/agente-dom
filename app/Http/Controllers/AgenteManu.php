@@ -9,7 +9,7 @@ class AgenteManu extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
     }
@@ -54,36 +54,4 @@ class AgenteManu extends Controller
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        return response()->json([
-            'status' => true,
-            'message' => 'Function no config.',
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        return response()->json([
-            'status' => true,
-            'message' => 'Function no config.',
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        return response()->json([
-            'status' => true,
-            'message' => 'Function no config.',
-        ]);
-    }
 }

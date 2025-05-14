@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class AgenteViniciusRqt extends FormRequest
+class AgenteViniciusVisitasRqt extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

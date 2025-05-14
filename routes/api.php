@@ -14,6 +14,6 @@ Route::group(['prefix' => 'agentevinicius'], function () {
 
 // Agente Manu
 Route::group(['prefix' => 'agentemanu'], function () {
-    Route::any('horarios', [AgenteVinicius::class, 'horarios']);
-    Route::post('visitas', [AgenteVinicius::class, 'visitas']);
+    Route::any('contatos', [AgenteVinicius::class, 'contatos']);
+    Route::post('negociacoes', [AgenteVinicius::class, 'negociacoes']);
 });
