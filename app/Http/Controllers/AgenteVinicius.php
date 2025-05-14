@@ -48,7 +48,7 @@ class AgenteVinicius extends Controller
         ];
         
         return response()->json([
-            'message' => $request->data
+            'message' => $request->all()
         ], 200);
 
         $response = Http::withHeaders([
