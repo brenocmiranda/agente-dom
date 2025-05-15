@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests\AgenteViniciusHorariosRqt;
-use App\Http\Requests\AgenteViniciusVisitasRqt;
+use App\Http\Requests\AgenteViniciusHoursRqt;
+use App\Http\Requests\AgenteViniciusVisitsRqt;
 use Illuminate\Support\Facades\Http;
 
 class AgenteVinicius extends Controller
@@ -29,7 +29,7 @@ class AgenteVinicius extends Controller
     /**
      * Lista os horários disponíveis para visita de acordo com empreendimentos
      */
-    public function hours ( AgenteViniciusHorariosRqt $request )
+    public function hours ( AgenteViniciusHoursRqt $request )
     {   
         Log::build([ 
             'driver' => 'single',
@@ -89,7 +89,7 @@ class AgenteVinicius extends Controller
     /**
      * Enviar dados do lead no status de visita dentro do Imoview da Anuar Donato, utilizando a data e horário enviado
      */
-    public function visits ( AgenteViniciusVisitasRqt $request )
+    public function visits ( AgenteViniciusVisitsRqt $request )
     {
         Log::build([ 
             'driver' => 'single',

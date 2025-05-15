@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class AgenteViniciusVisitasRqt extends FormRequest
+class AgenteViniciusHoursRqt extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,6 @@ class AgenteViniciusVisitasRqt extends FormRequest
     public function attributes(): array
     {
         return [
-            'nome' => 'Nome',
-            'telefone' => 'Telefone',
-            'email' => 'E-mail',
             'empreendimento' => 'Empreendimento',
             'data' => 'Data'
         ];
@@ -41,10 +38,7 @@ class AgenteViniciusVisitasRqt extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|min:3',
-            'telefone' => 'required|min:3',
-            'email' => 'required|email',
-            'empreendimento' => 'min:3',
+            'empreendimento' => 'required|min:3',
             'data' => 'required', Rule::date()->format('Y-m-d hh:mm')
         ];
     }
@@ -59,8 +53,6 @@ class AgenteViniciusVisitasRqt extends FormRequest
         return [
             'required' => 'O campo :attribute é obrigatório.',
             'min' => 'O campo :attribute deve possuir no minimo :min caracteres.',
-            'string' => 'O campo :attribute deve ser preenchido com texto.',
-            'email' => 'O campo :attribute só aceita valores de email.',
         ];    
     }
 
