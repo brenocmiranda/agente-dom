@@ -120,7 +120,7 @@ class AgenteVinicius extends Controller
             }
 
         } else {
-            $codempreendimento = $codempreendimento->lista[0]->codigomae;
+            $codempreendimento = $codempreendimento->lista[0]->codigomae !== 0 ? $codempreendimento->lista[0]->codigomae : $codempreendimento->lista[0]->codigo;
         }
 
         $fields = [
