@@ -129,7 +129,7 @@ class AgenteVinicius extends Controller
             "telefone" => $telefone,
             "midia" => "Teste Whatsapp",
             "codigounidade" => 30,
-            "codigoimovel" => $codempreendimento !== false ? key($codempreendimento) : "",
+            "codigoimovel" => $codempreendimento,
             "anotacoes" => "Empreendimento de interesse capturado através de conversa: " . $empreendimento,
             "datahoraagendamentovisita" => $data
         ];
