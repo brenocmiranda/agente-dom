@@ -17,7 +17,12 @@ class AgenteManu extends Controller
      */
     public function contacts( $nome, $email, $telefone )
     {
-        $response = Http::get( "https://crm.rdstation.com/api/v1/contacts?token=" . $this->token . "&q=" . $nome . "&email=" . $email . "&telefone=" . $telefone );        
+        $response = Http::get( "https://crm.rdstation.com/api/v1/contacts", [
+            'token'     => $this->token,
+            'q'         => $nome,
+            'email'     => $email,
+            'telefone' => $telefone
+        ]);        
         $response = json_decode($response);
         
         if( $response->total > 0 && count($response->contacts[0]->deals) > 0 ) {
