@@ -99,10 +99,6 @@ class AgenteManu extends Controller
             // Retornando ID da empresa
             $organization = $this->organizations( $empresa );
             
-        return response()->json([
-            'message' => $organization,
-        ], 200);
-
             // Cria nova negociação com novo contato
             $fields = [
                 "contacts" => [
@@ -138,6 +134,10 @@ class AgenteManu extends Controller
                 ]
             ];
             $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);
+            
+            return response()->json([
+                'message' => $response,
+            ], 200);
         }
         
         return response()->json([
