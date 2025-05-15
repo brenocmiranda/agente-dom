@@ -120,16 +120,16 @@ class AgenteManu extends Controller
                 "deal" => [
                     "name" => $nome,
                     "rating" => 1,
-                    "user_id" => "618f9e17faa9a9001196e162", // Usuário relacionado
+                    "user_id" => "618f9e17faa9a9001196e162",
                 ],
                 "campaign" => [
-                    "_id" => "5f0d9b9159a46b000195d3bd" // ID da campanha no sistema
+                    "_id" => "5f0d9b9159a46b000195d3bd"
                 ],
                 "deal_source" => [
-                    "_id" => "6823ce1200ee37001bfa5a8f"  // ID da fonte no sistema
+                    "_id" => "6823ce1200ee37001bfa5a8f"
                 ],
                 "organization" => [
-                    "_id" => $organization->id // ID da empresa do cliente
+                    "_id" => $organization->id
                 ]
             ];
             $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, json_encode($fields));
