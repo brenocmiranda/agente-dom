@@ -58,12 +58,12 @@ class AgenteManu extends Controller
         $nome = $request->nome;
         $email = $request->email;
         $telefone = $request->telefone;
+        $empresa = $request->empresa;
 
         $contact = $this->contacts($nome, $email, $telefone);
 
-        
-
         if ( $contact ) {
+
             // Atualiza os dados da negociação
             $fields = [
                 "deal" => [
@@ -79,8 +79,21 @@ class AgenteManu extends Controller
                     "_id" => "6823ce1200ee37001bfa5a8f"
                 ]
             ];
-            $response = Http::put('https://crm.rdstation.com/api/v1/deals/' . $response->deal_ids[0] . '?token=' . $this->token, json_encode($fields));
+            $response = Http::put('https://crm.rdstation.com/api/v1/deals/' . $contact->deal_ids[0] . '?token=' . $this->token, json_encode($fields));
+
         } else {
+
+            // Cria empresa relacionada ao contato
+            $fields = [
+                "organization" => [
+                    [
+                       "name" => $empresa
+                    ],
+                ],
+            ];
+            $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
+            $response = json_decode($response);
+
             // Cria nova negociação com novo contato
             $fields = [
                 "contacts" => [
@@ -110,6 +123,9 @@ class AgenteManu extends Controller
                 ],
                 "deal_source" => [
                     "_id" => "6823ce1200ee37001bfa5a8f"  // ID da fonte no sistema
+                ],
+                "organization" => [
+                    "_id" => $response->id  // ID da empresa do cliente
                 ]
             ];
             $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);
