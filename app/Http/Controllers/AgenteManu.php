@@ -133,9 +133,7 @@ class AgenteManu extends Controller
                     "_id" => $organization->id // ID da empresa do cliente
                 ]
             ];
-            $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);
-            
-            return $response->body();            
+            $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);          
         }
         
         return response()->json([
