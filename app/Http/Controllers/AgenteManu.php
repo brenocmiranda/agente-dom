@@ -86,9 +86,7 @@ class AgenteManu extends Controller
             // Cria empresa relacionada ao contato
             $fields = [
                 "organization" => [
-                    [
-                       "name" => $empresa
-                    ],
+                    "name" => $empresa
                 ],
             ];
             $responseOrg = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
