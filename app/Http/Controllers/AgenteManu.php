@@ -98,6 +98,7 @@ class AgenteManu extends Controller
 
             // Retornando ID da empresa
             $organization = $this->organizations( $empresa );
+            return $organization;
 
             // Cria nova negociação com novo contato
             $fields = [
