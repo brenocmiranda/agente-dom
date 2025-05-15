@@ -27,7 +27,7 @@ class AgenteVinicius extends Controller
     ];
 
     /**
-     * Lista os horários disponíveis para visita
+     * Lista os horários disponíveis para visita de acordo com empreendimentos
      */
     public function hours ( AgenteViniciusHorariosRqt $request )
     {   
@@ -69,7 +69,7 @@ class AgenteVinicius extends Controller
     }
 
     /**
-     * Marca uma visita dentro do CRM do cliente, com base na data e horário enviado
+     * Enviar dados do lead no status de visita dentro do Imoview da Anuar Donato, utilizando a data e horário enviado
      */
     public function visits ( AgenteViniciusVisitasRqt $request )
     {

@@ -148,6 +148,4 @@ class AgenteManu extends Controller
         ], 200);
     }
 
-    
-
 }
