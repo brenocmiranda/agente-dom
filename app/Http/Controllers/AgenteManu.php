@@ -39,7 +39,7 @@ class AgenteManu extends Controller
                     ]
                 ],
             ];
-            $response = Http::put('https://crm.rdstation.com/api/v1/contacts/' . $contact_id . '?token=' . $this->token, $fields);
+            $response = Http::put('https://crm.rdstation.com/api/v1/contacts/' . $contact_id . '?token=' . $this->token, json_encode($fields));
             $response = json_decode($response);
             return $response;
         } else {
@@ -57,7 +57,7 @@ class AgenteManu extends Controller
                 "name" => $empresa
             ],
         ];
-        $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
+        $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, json_encode($fields));
         $response = json_decode($response);
         return $response;
     }
@@ -92,7 +92,7 @@ class AgenteManu extends Controller
                 ],
                 "deal_stage_id" => "67ca0df76eee35001df63bad" // Funil de vendas (Reunião agendada)
             ];
-            $response = Http::put('https://crm.rdstation.com/api/v1/deals/' . $contact->deal_ids[0] . '?token=' . $this->token, $fields);
+            $response = Http::put('https://crm.rdstation.com/api/v1/deals/' . $contact->deal_ids[0] . '?token=' . $this->token, json_encode($fields));
             
         } else {
 
