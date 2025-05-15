@@ -13,13 +13,11 @@ class AgenteManu extends Controller
     protected $token = "618f9e17faa9a9001196e164";
 
     /**
-     * Validando a existência de contatos criados
+     * Validando a existência de contatos e criando caso não exista
      */
-    public function contacts( $nome = "", $email = "", $telefone = "" )
+    public function contacts( $nome, $email, $telefone )
     {
-        $url = "https://crm.rdstation.com/api/v1/contacts?token=" . $this->token . "&q=" . $nome . "&email=" . $email . "&telefone=" . $telefone;
-
-        $response = Http::get( $url );        
+        $response = Http::get( "https://crm.rdstation.com/api/v1/contacts?token=" . $this->token . "&q=" . $nome . "&email=" . $email . "&telefone=" . $telefone );        
         $response = json_decode($response);
         
         if( $response->total > 0 && count($response->contacts[0]->deals) > 0 ) {
@@ -44,11 +42,32 @@ class AgenteManu extends Controller
         }
     }
 
+    /**
+     * Validando a existência de empresas e criando caso não exista
+     */
+    public function organizations ( $empresa )
+    {
+        $response = Http::get( "https://crm.rdstation.com/api/v1/organizations?token=" . $this->token . "&q=" . $empresa );        
+        $response = json_decode($response);
+ 
+        if( $response->total > 0 ) {
+            return $response->organizations[0]->id;
+        } else {
+            $fields = [
+                "organization" => [
+                    "name" => $empresa
+                ],
+            ];
+            $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
+            $response = json_decode($response);
+            return $response->organizations[0]->id;
+        }
+    }
 
     /**
      * Cria uma nova negociação indo para o estado de reunião agendada
      */
-    public function negotiations(AgenteManuNegotiationsRqt $request)
+    public function negotiations ( AgenteManuNegotiationsRqt $request )
     {
         Log::build([ 
             'driver' => 'single',
@@ -60,11 +79,12 @@ class AgenteManu extends Controller
         $telefone = $request->telefone;
         $empresa = $request->empresa;
 
+        // Retornando ID do contato
         $contact = $this->contacts($nome, $email, $telefone);
 
         if ( $contact ) {
 
-            // Atualiza os dados da negociação
+            // Atualizando os dados da negociação
             $fields = [
                 "deal" => [
                     "name" => $nome,
@@ -83,14 +103,8 @@ class AgenteManu extends Controller
 
         } else {
 
-            // Cria empresa relacionada ao contato
-            $fields = [
-                "organization" => [
-                    "name" => $empresa
-                ],
-            ];
-            $responseOrg = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
-            $responseOrg = json_decode($responseOrg);
+            // Retornando ID da empresa
+            $organization = $this->organizations( $empresa );
 
             // Cria nova negociação com novo contato
             $fields = [
@@ -123,7 +137,7 @@ class AgenteManu extends Controller
                     "_id" => "6823ce1200ee37001bfa5a8f"  // ID da fonte no sistema
                 ],
                 "organization" => [
-                    "_id" => $responseOrg->id  // ID da empresa do cliente
+                    "_id" => $organization // ID da empresa do cliente
                 ]
             ];
             $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);
@@ -133,5 +147,7 @@ class AgenteManu extends Controller
             'message' => $response->successful() === true ? "Agendamento realizado com sucesso." : "Não foi possível realizar o agendamento.",
         ], 200);
     }
+
+    
 
 }
