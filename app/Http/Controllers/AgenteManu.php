@@ -119,7 +119,6 @@ class AgenteManu extends Controller
                 ],
                 "deal" => [
                     "name" => $nome,
-                    // "deal_stage_id" => "67ca0df76eee35001df63bad", // Funil de vendas
                     "rating" => 1,
                     "user_id" => "618f9e17faa9a9001196e162", // Usuário relacionado
                 ],
