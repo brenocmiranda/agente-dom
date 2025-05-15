@@ -91,8 +91,8 @@ class AgenteManu extends Controller
                     ],
                 ],
             ];
-            $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
-            $response = json_decode($response);
+            $responseOrg = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
+            $responseOrg = json_decode($responseOrg);
 
             // Cria nova negociação com novo contato
             $fields = [
@@ -125,7 +125,7 @@ class AgenteManu extends Controller
                     "_id" => "6823ce1200ee37001bfa5a8f"  // ID da fonte no sistema
                 ],
                 "organization" => [
-                    "_id" => $response->id  // ID da empresa do cliente
+                    "_id" => $responseOrg->id  // ID da empresa do cliente
                 ]
             ];
             $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);
