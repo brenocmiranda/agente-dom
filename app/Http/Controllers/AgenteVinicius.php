@@ -102,6 +102,7 @@ class AgenteVinicius extends Controller
         $telefone = $request->telefone;
         $date = str_replace("(Hora padrão de Brasília)", "", $request->data);
         $data = date('d/m/Y H:i', strtotime($date));
+        $conversa = $request->conversa;
         $empreendimento = $request->empreendimento; 
 
         // Capturando código do empreendimento de acordo com API
@@ -132,7 +133,7 @@ class AgenteVinicius extends Controller
             "midia" => "Teste Whatsapp",
             "codigounidade" => 30,
             "codigoimovel" => $codempreendimento,
-            "anotacoes" => "Empreendimento de interesse capturado através de conversa: " . $empreendimento,
+            "anotacoes" => $conversa,
             "datahoraagendamentovisita" => $data
         ];
 

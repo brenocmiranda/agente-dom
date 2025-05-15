@@ -29,7 +29,8 @@ class AgenteViniciusVisitsRqt extends FormRequest
             'telefone' => 'Telefone',
             'email' => 'E-mail',
             'empreendimento' => 'Empreendimento',
-            'data' => 'Data'
+            'data' => 'Data',
+            'conversa' => 'Resumo da conversa'
         ];
     }
 
@@ -45,7 +46,8 @@ class AgenteViniciusVisitsRqt extends FormRequest
             'telefone' => 'required|min:3',
             'email' => 'required|email',
             'empreendimento' => 'min:3',
-            'data' => 'required', Rule::date()->format('Y-m-d hh:mm')
+            'data' => 'required', Rule::date()->format('Y-m-d hh:mm'),
+            'conversa' => 'required'
         ];
     }
 
