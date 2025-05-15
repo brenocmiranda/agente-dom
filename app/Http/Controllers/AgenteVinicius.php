@@ -38,21 +38,39 @@ class AgenteVinicius extends Controller
 
         $data = date('d/m/Y', strtotime($request->data));
         $empreendimento = $request->empreendimento; 
+
+        // Capturando código do empreendimento de acordo com API
+        $codempreendimento = $this->searchBuildings( $empreendimento );
+        if( $codempreendimento == false || empty($codempreendimento) ){
+
+            // Capturando código do empreendimento de acordo com array, caso a API não funcione
+            $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
+                return strpos($item, $empreendimento) !== false;
+            });
+            if( $codempreendimento == false ){
+                return response()->json([
+                    'message' => "Empreendimento não encontrado, tente selecionar um outro."
+                ], 200);
+            } else {
+                $codempreendimento = key($codempreendimento);
+            }
+
+        } else {
+            $codempreendimento = $codempreendimento->lista[0]->codigomae;
+        }
         
-        // Capturando código do empreendimento de acordo com array
+        /*
         $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
             return strpos($item, $empreendimento) !== false;
         });
-
-        // Validando se empreendimento existe
         if( $codempreendimento == false ){
             return response()->json([
                 'message' => "Empreendimento não encontrado, tente selecionar um outro."
             ], 200);
-        }
+        }*/
 
         $fields = [
-            "codigoimovel" => key($codempreendimento),
+            "codigoimovel" => $codempreendimento,
             "data" => $data,
             "codigounidade" => 30,
         ];
@@ -85,10 +103,25 @@ class AgenteVinicius extends Controller
         $data = date('d/m/Y H:i', strtotime($date));
         $empreendimento = $request->empreendimento; 
 
-        // Capturando código do empreendimento de acordo com array
-        $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
-            return strpos($item, $empreendimento) !== false;
-        });
+        // Capturando código do empreendimento de acordo com API
+        $codempreendimento = $this->searchBuildings( $empreendimento );
+        if( $codempreendimento == false || empty($codempreendimento) ){
+
+            // Capturando código do empreendimento de acordo com array, caso a API não funcione
+            $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
+                return strpos($item, $empreendimento) !== false;
+            });
+            if( $codempreendimento == false ){
+                return response()->json([
+                    'message' => "Empreendimento não encontrado, tente selecionar um outro."
+                ], 200);
+            } else {
+                $codempreendimento = key($codempreendimento);
+            }
+
+        } else {
+            $codempreendimento = $codempreendimento->lista[0]->codigomae;
+        }
 
         $fields = [
             "nome" => $nome,
@@ -110,5 +143,29 @@ class AgenteVinicius extends Controller
         return response()->json([
             'message' => $response->successful() === true ? "Agendamento realizado com sucesso." : "Não foi possível realizar o agendamento.",
         ], 200);
+    }
+
+    /**
+     * Listando os empreendimentos relacionados ao cliente
+     */
+    public function searchBuildings ( $empreendimento )
+    {  
+        // Retornando código do empreendimento através da API 
+        $fields = [
+            "codigounidade" => 30,
+            "finalidade" => 2,
+            "edificio" => $empreendimento,
+            "numeroRegistros" => 1,
+            "exibiranexos" => false
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'chave' => $this->chave,
+            'codigoacesso' => $this->codigoAcesso
+        ])->post('https://api.imoview.com.br/Imovel/RetornarImoveisDisponiveis', json_encode($fields));
+
+        $response = json_decode($response);
+        return $response;
     }
 }
