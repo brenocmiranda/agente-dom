@@ -79,7 +79,6 @@ class AgenteManu extends Controller
 
         // Retornando ID do contato
         $contact = $this->contacts($nome, $email, $telefone);
-        return $contact;
 
         if ( $contact ) {
 
@@ -99,7 +98,8 @@ class AgenteManu extends Controller
 
             // Retornando ID da empresa
             $organization = $this->organizations( $empresa );
-            
+            return $organization;
+
             // Cria nova negociação com novo contato
             $fields = [
                 "contacts" => [
