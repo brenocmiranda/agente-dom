@@ -79,6 +79,7 @@ class AgenteManu extends Controller
 
         // Retornando ID do contato
         $contact = $this->contacts($nome, $email, $telefone);
+        return $contact;
 
         if ( $contact ) {
 
@@ -120,21 +121,20 @@ class AgenteManu extends Controller
                 "deal" => [
                     "name" => $nome,
                     "rating" => 1,
-                    "user_id" => "618f9e17faa9a9001196e162",
+                    "user_id" => "618f9e17faa9a9001196e162", // Usuário relacionado
                 ],
                 "campaign" => [
-                    "_id" => "5f0d9b9159a46b000195d3bd"
+                    "_id" => "5f0d9b9159a46b000195d3bd" // ID da campanha no sistema
                 ],
                 "deal_source" => [
-                    "_id" => "6823ce1200ee37001bfa5a8f"
+                    "_id" => "6823ce1200ee37001bfa5a8f"  // ID da fonte no sistema
                 ],
                 "organization" => [
-                    "_id" => $organization->id
+                    "_id" => $organization->id // ID da empresa do cliente
                 ]
             ];
             $response = Http::post('https://crm.rdstation.com/api/v1/deals?token=' . $this->token, $fields);
             
-            return $response->body();
             
         }
         
