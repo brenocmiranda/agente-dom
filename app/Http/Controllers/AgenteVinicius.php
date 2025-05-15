@@ -108,17 +108,18 @@ class AgenteVinicius extends Controller
         $codempreendimento = $this->searchBuildings( $empreendimento );
         if( $codempreendimento == false || empty($codempreendimento) ){
 
-            // Capturando código do empreendimento de acordo com array, caso a API não funcione
+            /* Capturando código do empreendimento de acordo com array, caso a API não funcione
             $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
                 return strpos($item, $empreendimento) !== false;
             });
-            if( $codempreendimento == false ){
+            if( $codempreendimento == false ){*/
                 return response()->json([
-                    'message' => "Empreendimento não encontrado, tente selecionar um outro."
+                    'message' => "Empreendimento não encontrado, consegue nos informar o código?"
                 ], 200);
+                /*
             } else {
                 $codempreendimento = key($codempreendimento);
-            }
+            }*/
 
         } else {
             $codempreendimento = !empty($codempreendimento->lista[0]->codigomae) ? $codempreendimento->lista[0]->codigomae : $codempreendimento->lista[0]->codigo;
@@ -153,9 +154,9 @@ class AgenteVinicius extends Controller
     {  
         // Retornando código do empreendimento através da API 
         $fields = [
-            "codigounidade" => 30,
             "finalidade" => 2,
-            "edificio" => $empreendimento,
+            "codigounidade" => 30,
+            "codigosimoveis" => $empreendimento,
             "numeroRegistros" => 1,
             "exibiranexos" => false
         ];
