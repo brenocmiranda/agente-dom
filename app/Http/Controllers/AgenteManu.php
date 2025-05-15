@@ -47,12 +47,12 @@ class AgenteManu extends Controller
      */
     public function organizations ( $empresa )
     {
-        $response = Http::get( "https://crm.rdstation.com/api/v1/organizations?token=" . $this->token . "&q=" . $empresa );        
+        /*$response = Http::get( "https://crm.rdstation.com/api/v1/organizations?token=" . $this->token . "&q=" . $empresa );        
         $response = json_decode($response);
  
         if( $response->total > 0 ) {
             return $response->organizations[0]->id;
-        } else {
+        } else {*/
             $fields = [
                 "organization" => [
                     "name" => $empresa
@@ -61,7 +61,7 @@ class AgenteManu extends Controller
             $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
             $response = json_decode($response);
             return $response->organizations[0]->id;
-        }
+        /*}*/
     }
 
     /**
