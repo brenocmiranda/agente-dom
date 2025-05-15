@@ -79,6 +79,9 @@ class AgenteManu extends Controller
 
         // Retornando ID do contato
         $contact = $this->contacts($nome, $email, $telefone);
+        return response()->json([
+            'message' => $contact,
+        ], 200);
 
         if ( $contact ) {
 
