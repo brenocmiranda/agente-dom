@@ -23,7 +23,8 @@ class AgenteVinicius extends Controller
         23337 => "Zenith Residence",
         26358 => "Green Arch",
         23649 => "Antonini Coscarelli",
-        25557 => "Conartes Tower"
+        25557 => "Conartes Tower",
+        39301 => "Vila Paris"
     ];
 
     /**
