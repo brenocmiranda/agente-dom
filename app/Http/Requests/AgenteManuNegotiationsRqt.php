@@ -27,6 +27,7 @@ class AgenteManuNegotiationsRqt extends FormRequest
             'name' => 'Nome',
             'telefone' => 'Telefone',
             'email' => 'E-mail',
+            'empresa' => 'Empresa',
         ];
     }
 
@@ -38,9 +39,10 @@ class AgenteManuNegotiationsRqt extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|min:3',
+            'nome' => 'required|string',
             'telefone' => 'required|min:3',
             'email' => 'required|email',
+            'empresa' => 'required|string',
         ];
     }
 
