@@ -15,19 +15,6 @@ class AgenteVinicius extends Controller
     protected $codigoAcesso = 16;
 
     /**
-     * Empreendimentos cadastrados no CRM
-     */
-    protected $arrayEmpreendimentos = [
-        48592 => "Hakken Residence",
-        39227 => "High Gardens Residence",
-        23337 => "Zenith Residence",
-        26358 => "Green Arch",
-        23649 => "Antonini Coscarelli",
-        25557 => "Conartes Tower",
-        39301 => "Vila Paris"
-    ];
-
-    /**
      * Lista os horários disponíveis para visita de acordo com empreendimentos
      */
     public function hours ( AgenteViniciusHoursRqt $request )
@@ -43,33 +30,14 @@ class AgenteVinicius extends Controller
         // Capturando código do empreendimento de acordo com API
         $codempreendimento = $this->searchBuildings( $empreendimento );
         if( $codempreendimento == false || empty($codempreendimento) ){
-
-            // Capturando código do empreendimento de acordo com array, caso a API não funcione
-            $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
-                return strpos($item, $empreendimento) !== false;
-            });
-            if( $codempreendimento == false ){
-                return response()->json([
-                    'message' => "Empreendimento não encontrado, tente selecionar um outro."
-                ], 200);
-            } else {
-                $codempreendimento = key($codempreendimento);
-            }
+            return response()->json([
+                'message' => "Empreendimento não encontrado, consegue nos informar o código?"
+            ], 200);
 
         } else {
-            $codempreendimento = $codempreendimento->lista[0]->codigomae;
+            $codempreendimento = !empty($codempreendimento->lista[0]->codigomae) ? $codempreendimento->lista[0]->codigomae : $codempreendimento->lista[0]->codigo;
         }
         
-        /*
-        $codempreendimento = array_filter($this->arrayEmpreendimentos, function($item) use ($empreendimento) {
-            return strpos($item, $empreendimento) !== false;
-        });
-        if( $codempreendimento == false ){
-            return response()->json([
-                'message' => "Empreendimento não encontrado, tente selecionar um outro."
-            ], 200);
-        }*/
-
         $fields = [
             "codigoimovel" => $codempreendimento,
             "data" => $data,

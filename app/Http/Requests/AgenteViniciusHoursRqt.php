@@ -38,7 +38,7 @@ class AgenteViniciusHoursRqt extends FormRequest
     public function rules(): array
     {
         return [
-            'empreendimento' => 'required|min:3',
+            'empreendimento' => 'required',
             'data' => 'required', Rule::date()->format('Y-m-d hh:mm')
         ];
     }
