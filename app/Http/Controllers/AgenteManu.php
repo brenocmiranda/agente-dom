@@ -57,7 +57,7 @@ class AgenteManu extends Controller
                 "name" => $empresa
             ],
         ];
-        $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, $fields);
+        $response = Http::post('https://crm.rdstation.com/api/v1/organizations?token=' . $this->token, json_encode($fields));
         $response = json_decode($response);
         return $response;
     }
